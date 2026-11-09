@@ -2,17 +2,20 @@
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Z-BrD</title>
-<style>body{font-family:Arial;text-align:center;background:#fffaf0}
-.logo{width:90px;height:90px;border:3px solid #C9A227;border-radius:50%;margin:20px auto;display:flex;align-items:center;justify-content:center;font-weight:900;color:#B8961E;font-size:22px}
-a{display:inline-block;margin:5px;padding:12px 18px;background:#C9A227;color:#fff;text-decoration:none;border-radius:30px;font-weight:700}
-.card{background:#fff;border:1px solid #eee;border-radius:14px;padding:15px;margin:12px}</style>
-</head><body>
-<div class="logo">Z-BrD</div>
-<h1>Vous voulez un projet professionnel qui attire des clients ?</h1>
-<p>Chez Z-BrD, nous transformons votre idée en un projet propre et élégant.</p>
-<a href="https://wa.me/212600000000">Contactez-Nous sur WhatsApp</a>
-<div class="card"><h3>Design</h3><p>Design propre et moderne.</p></div>
-<div class="card"><h3>Développement</h3><p>Site rapide sans bug.</p></div>
-<div class="card"><h3>Branding</h3><p>Logo qui marque vos clients.</p></div>
-<p>Z-BrD - Travail propre, résultat professionnel.</p>
-</body></html>
+<style>body{font-family:Arial;margin:0;background:#fffaf0;text-align:center}
+header{position:sticky;top:0;background:#fff;padding:12px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.logo{width:84px;height:84px;border:3px solid #C9A227;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#B8961E;font-size:21px}
+nav button{border:1px solid #eee;background:#f9f9f9;padding:9px 12px;border-radius:30px;font-weight:700;margin:2px}
+nav button.active{background:#C9A227;color:#fff}
+.page{display:none;padding:16px;max-width:700px;margin:auto}.page.active{display:block}
+.btn{display:inline-block;margin:6px;padding:12px 18px;background:#C9A227;color:#fff;text-decoration:none;border-radius:30px;font-weight:800;border:0}
+.card{background:#fff;border:1px solid #eee;border-radius:14px;padding:14px;margin:12px;text-align:left}
+input{width:100%;padding:11px;border:1px solid #ddd;border-radius:12px;margin-top:8px}
+</style></head><body>
+<header><div class="logo">Z-BrD</div>
+<nav><button class="active" onclick="show('a',this)">Accueil</button><button onclick="show('s',this)">Services</button><button onclick="show('b',this)">Boutique</button><button onclick="show('c',this)">Contact</button></nav></header>
+<div id="a" class="page active"><h1>Vous voulez un projet professionnel qui attire des clients ?</h1><p>Chez Z-BrD, nous transformons votre idée en un projet propre, élégant et qui fonctionne vraiment. Parlez-nous dès maintenant, sans engagement.</p><button class="btn" onclick="show('c',document.querySelectorAll('nav button')[3])">Contactez-Nous Maintenant</button><div class="card">✅ Travail propre et professionnel</div><div class="card">⚡ Rapide et sans complications</div><div class="card">🎯 Résultat qui attire vos clients</div></div>
+<div id="s" class="page"><h1>Nos Services</h1><div class="card"><h3>Design</h3><p>Design propre, moderne et élégant.</p><button class="btn" onclick="wa('Bonjour Z-BrD, je veux Design')">Demander sur WhatsApp</button></div><div class="card"><h3>Développement</h3><p>Site rapide, sans bug, sur téléphone et ordinateur.</p><button class="btn" onclick="wa('Bonjour Z-BrD, je veux Développement')">Demander sur WhatsApp</button></div><div class="card"><h3>Branding</h3><p>Logo qui marque vos clients.</p><button class="btn" onclick="wa('Bonjour Z-BrD, je veux Branding')">Demander sur WhatsApp</button></div><div class="card"><h3>Marketing</h3><p>Attirer plus de clients.</p><button class="btn" onclick="wa('Bonjour Z-BrD, je veux Marketing')">Demander sur WhatsApp</button></div></div>
+<div id="b" class="page"><h1>Notre Boutique</h1><input id="q" placeholder="Rechercher..." oninput="fil()"><div id="list"></div><p id="pan" style="font-weight:800"></p><button class="btn" onclick="cmd()">Commander sur WhatsApp</button></div>
+<div id="c" class="page"><h1>Contactez-Nous</h1><input id="n" placeholder="Nom"><input id="t" placeholder="Téléphone"><input id="m" placeholder="Votre Message"><br><button class="btn" onclick="snd()">Envoyer sur WhatsApp</button></div>
+<script>const WA="212600000000";let P=[["Logo Professionnel",499],["Site Vitrine",1499],["Boutique en Ligne",2999],["Carte Visite Digitale",199],["Gestion Réseaux Sociaux",999],["Application Simple",3999]];let C=[];function show(id,b){document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));if(b)b.classList.add('active');window.scrollTo(0,0)}function wa(t){open("https://wa.me/"+WA+"?text="+encodeURIComponent(t))}function fil(){let q=document.getElementById('q').value.toLowerCase();render(P.filter(p=>p[0].toLowerCase().includes(q)))}function render(l){document.getElementById('list').innerHTML=l.map((p,i)=>`<div class="card"><h3>${p[0]}</h3><b>${p[1]} DH</b><br><button class="btn" onclick="add(${P.indexOf(p)})">Ajouter</button></div>`).join('')}function add(i){C.push(P[i]);document.getElementById('pan').innerText="Panier: "+C.length+" - Total: "+C.reduce((s,x)=>s+x[1],0)+" DH"}function cmd(){wa("Bonjour Z-BrD, je veux commander: "+C.map(c=>c[0]+" "+c[1]+" DH").join(", "))}function snd(){wa("Bonjour Z-BrD, je suis "+document.getElementById('n').value+" ("+document.getElementById('t').value+") : "+document.getElementById('m').value)}render(P)</script></body></html>

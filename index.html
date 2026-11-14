@@ -1,23 +1,452 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Z-BrD</title>
-<style>body{font-family:Arial;margin:0;background:#fffaf0;text-align:center;padding-bottom:80px}
-header{position:sticky;top:0;background:#fff;padding:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);z-index:10}
-.logo{width:84px;height:84px;border:3px solid #C9A227;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#B8961E;font-size:21px}
-nav button{border:1px solid #eee;background:#f9f9f9;padding:9px 12px;border-radius:30px;font-weight:700;margin:2px}
-nav button.active{background:#C9A227;color:#fff}
-.page{display:none;padding:16px;max-width:700px;margin:auto}.page.active{display:block}
-.btn{display:inline-block;margin:6px;padding:12px 18px;background:#C9A227;color:#fff;text-decoration:none;border-radius:30px;font-weight:800;border:0}
-.card{background:#fff;border:1px solid #eee;border-radius:14px;padding:14px;margin:12px;text-align:left}
-input{width:100%;padding:11px;border:1px solid #ddd;border-radius:12px;margin-top:8px}
-#cart{position:fixed;bottom:0;left:0;right:0;background:#111;color:#fff;padding:12px;text-align:center;font-weight:800;display:none}
-</style></head><body>
-<header><div class="logo">Z-BrD</div>
-<nav><button class="active" onclick="show('a',this)">Accueil</button><button onclick="show('s',this)">Services</button><button onclick="show('b',this)">Boutique</button><button onclick="show('c',this)">Contact</button></nav></header>
-<div id="a" class="page active"><h1>Vous voulez un projet professionnel qui attire des clients ?</h1><p>Chez Z-BrD, nous transformons votre idée en un projet propre, élégant et qui fonctionne vraiment. Parlez-nous dès maintenant, sans engagement.</p><button class="btn" onclick="show('c',document.querySelectorAll('nav button')[3])">Contactez-Nous Maintenant</button><div class="card">✅ Travail propre et professionnel</div><div class="card">⚡ Rapide et sans complications</div><div class="card">🎯 Résultat qui attire vos clients</div></div>
-<div id="s" class="page"><h1>Nos Services</h1><div class="card"><h3>Design</h3><p>Design propre, moderne et élégant.</p><button class="btn" onclick="wa('Bonjour Z-BrD, je veux Design')">Demander sur WhatsApp</button></div><div class="card"><h3>Développement</h3><p>Site rapide, sans bug, sur téléphone et ordinateur.</p><button class="btn" onclick="wa('Bonjour Z-BrD, je veux Développement')">Demander sur WhatsApp</button></div><div class="card"><h3>Branding</h3><p>Logo qui marque vos clients.</p><button class="btn" onclick="wa('Bonjour Z-BrD, je veux Branding')">Demander sur WhatsApp</button></div><div class="card"><h3>Marketing</h3><p>Attirer plus de clients.</p><button class="btn" onclick="wa('Bonjour Z-BrD, je veux Marketing')">Demander sur WhatsApp</button></div></div>
-<div id="b" class="page"><h1>Notre Boutique</h1><input id="q" placeholder="Rechercher..." oninput="fil()"><div id="list"></div><p id="pan" style="font-weight:800"></p><button class="btn" onclick="cmd()">Commander sur WhatsApp</button></div>
-<div id="c" class="page"><h1>Contactez-Nous</h1><input id="n" placeholder="Nom"><input id="t" placeholder="Téléphone"><input id="m" placeholder="Votre Message"><br><button class="btn" onclick="snd()">Envoyer sur WhatsApp</button></div>
-<div id="cart">Panier vide</div>
-<script>const WA="212600000000";let P=[["Logo Professionnel",499],["Site Vitrine",1499],["Boutique en Ligne",2999],["Carte Visite Digitale",199],["Gestion Réseaux Sociaux",999],["Application Simple",3999]];let C=[];function show(id,b){document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));if(b)b.classList.add('active');window.scrollTo(0,0)}function wa(t){window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(t),"_blank")}function fil(){let q=document.getElementById('q').value.toLowerCase();render(P.filter(p=>p[0].toLowerCase().includes(q)))}function render(l){document.getElementById('list').innerHTML=l.map(p=>`<div class="card"><h3>${p[0]}</h3><b>${p[1]} DH</b><br><button class="btn" onclick="add(${P.indexOf(p)})">Ajouter</button></div>`).join('')}function add(i){C.push(P[i]);let t=C.reduce((s,x)=>s+x[1],0);let c=document.getElementById('cart');c.style.display='block';c.innerText="🛒 Panier: "+C.length+" article(s) - Total: "+t+" DH - Cliquez sur Commander";document.getElementById('pan').innerText="✅ Ajouté : "+P[i][0]+" | Total : "+t+" DH";alert("✅ Ajouté : "+P[i][0]+"\nTotal panier : "+t+" DH")}function cmd(){if(C.length==0){alert("Panier vide, ajoutez un produit d'abord");return}wa("Bonjour Z-BrD, je veux commander: "+C.map(c=>c[0]+" "+c[1]+" DH").join(", ")+" | Total: "+C.reduce((s,x)=>s+x[1],0)+" DH")}function snd(){wa("Bonjour Z-BrD, je suis "+document.getElementById('n').value+" ("+document.getElementById('t').value+") : "+document.getElementById('m').value)}render(P)</script></body></html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Z-BrD V14 Pro • Final</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;scroll-behavior:smooth} body{margin:0;font-family:Inter,system-ui;background:#fcfcfd;color:#0f172a;padding-bottom:120px}
+header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid #eef2f7;padding:10px 14px}
+.top{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.logo{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}.z{width:38px;height:38px;border-radius:10px;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.brand{font-family:'Plus Jakarta Sans';font-weight:800;font-size:19px}.badgeV{background:#eff6ff;color:#2563eb;font-size:11px;padding:4px 8px;border-radius:999px;font-weight:700}
+.wrap{max-width:980px;margin:auto;padding:14px}
+.hero{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-radius:20px;padding:20px}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:24px;margin:6px 0}.hero p{opacity:.9;font-size:13px;margin:0}
+.nav{display:flex;gap:7px;overflow:auto;padding:12px 0;position:sticky;top:60px;background:#fcfcfd;z-index:20}
+.pill{border:1px solid #e2e8f0;background:#fff;padding:9px 13px;border-radius:999px;font-weight:600;font-size:13px;white-space:nowrap;cursor:pointer}
+.pill.active{background:#0f172a;color:#fff}
+.card{background:#fff;border:1px solid #eef2f7;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 4px 16px rgba(15,23,42,.04)}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:start;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:800;text-transform:uppercase;padding:5px 9px;border-radius:999px}
+.tag.programme{background:#dcfce7;color:#15803d}.tag.emploi{background:#dbeafe;color:#1d4ed8}.tag.activite{background:#fef3c7;color:#92400e}.tag.devoir{background:#fee2e2;color:#b91c1c}.tag.rappel{background:#f3e8ff;color:#7e22ce}
+.time{font-weight:700;font-size:13px}.title{font-size:16px;font-weight:700;margin:6px 0 4px}.mut{color:#64748b;font-size:13px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #e2e8f0;border-radius:12px;font-size:14px;margin:6px 0;background:#fff;outline:none}
+input:focus{border-color:#2563eb;box-shadow:0 0 0 3px #eff6ff}
+label{font-size:12px;font-weight:700;color:#475569}
+.req{color:#ef4444;font-weight:800}.opt-note{font-size:11px;color:#64748b;margin:-2px 0 6px}
+.btn{border:0;border-radius:999px;padding:11px 16px;font-weight:700;cursor:pointer;font-size:14px}
+.btnP{background:#2563eb;color:#fff}.btnG{background:#f1f5f9;color:#0f172a}.btnR{background:#fee2e2;color:#b91c1c}.btnS{background:#dcfce7;color:#15803d}.btnD{background:#0f172a;color:#fff}.btnO{background:#ffedd5;color:#9a3412}
+.flex{display:flex;gap:8px;flex-wrap:wrap}.flex>*{flex:1;min-width:120px}
+#status{border-radius:14px;padding:12px;font-size:13px;font-weight:600;margin:12px 0}.ok{background:#dcfce7}.err{background:#fee2e2}.load{background:#fef9c3}
+.redAlert{background:#fee2e2;border:2px solid #ef4444;color:#991b1b;border-radius:14px;padding:14px;font-weight:700;margin:12px 0}
+.blockBox{background:#fef3c7;border:1px solid #f59e0b;border-radius:14px;padding:14px;margin:12px 0}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eef2f7;padding:10px 14px;z-index:40}
+.bottomIn{max-width:980px;margin:auto;display:flex;gap:8px;align-items:center;justify-content:space-between}
+.count{font-size:12px;color:#64748b;font-weight:600;text-align:center}
+.hidden{display:none}
+.pack{border:2px solid #e2e8f0;border-radius:16px;padding:14px;cursor:pointer}.pack.active{border-color:#2563eb;background:#eff6ff}
+.devLock{background:#0f172a;color:#fff;border-radius:18px;padding:18px}
+.small{font-size:12px;color:#64748b}
+.licenceRed{background:#fee2e2;border:3px solid #ef4444;color:#991b1b;border-radius:14px;padding:12px;font-weight:800;text-align:center}
+.toggle{padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700;border:0;cursor:pointer}
+.on{background:#dcfce7;color:#15803d}.off{background:#fee2e2;color:#b91c1c}
+table{width:100%;border-collapse:collapse;font-size:13px} td,th{padding:8px;border-bottom:1px solid #eef2f7;text-align:left}
+</style>
+<script>
+const SB_URL="https://kyxygfjsfjgmvodezeom.supabase.co";
+const SB_KEY="sb_publishable_zLFs2DPU3IUV5m4oNVFV3g_u9oLFPkR";
+async function syncClientToSupabase(c){
+  try{
+    await fetch(SB_URL+"/rest/v1/clients",{method:"POST",headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Content-Type":"application/json","Prefer":"resolution=merge-duplicates"},body:JSON.stringify({id:c.id,nom:c.nom,prenom:c.prenom,surname:c.surname||"",sexe:c.sexe||"",ville:c.ville||"",pays:c.pays||"",cin:c.cin||"",telephone:c.tel||"",email:c.email||"",naissance:c.naiss||"",login:c.login,mot_de_passe:c.pass||"",pack:c.pack||"demo",plan:c.plan||"demo",statut:c.status||"demo",licence_code:c.licence||"",paiement:c.pay||"",code_recu:c.codePay||"",device_id:c.deviceId||""})});
+  }catch(e){ console.log("Supabase clients sync",e); }
+}
+async function syncLicenceToSupabase(c){
+  if(!c.licence) return;
+  try{ await fetch(SB_URL+"/rest/v1/licences",{method:"POST",headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Content-Type":"application/json"},body:JSON.stringify({code:c.licence,login:c.login,client_id:c.id})}); }catch(e){}
+}
+</script>
+</head>
+<body>
+<header><div class="top"><div class="logo" onclick="logoClick()"><div class="z">Z</div><div><span class="brand">Z-BrD</span> <span class="badgeV">V14 Pro</span></div></div><div class="flex" style="max-width:280px"><button class="btn btnG" onclick="prevPage()">← Précédent</button><button class="btn btnP" onclick="nextPage()">Suivant →</button></div></div></header>
+<div class="wrap">
+
+<div id="statsBar" style="background:#0f172a;color:#fff;border-radius:14px;padding:12px;margin-bottom:12px;display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between"><span>👀 <b id="statViews">0</b> ont vu l'application</span><span>🎁 <b id="statDemo">0</b> ont fait l'essai</span><span>⭐ <b id="statPro">0</b> abonnés</span></div>
+<div id="screen-login" class="card">
+<h2 style="margin:0">👋 Bienvenue sur Z-BrD</h2>
+<p class="mut">🎁 <b>Essai gratuit 15 jours - 100% gratuit</b> - Tous les boutons marchent. Ton compte reste enregistré sur ce téléphone.</p>
+<p class="mut"><span class="req">*</span> = obligatoire. C.I.N est optionnel.</p>
+<div class="flex"><div><label>Nom <span class="req">*</span></label><input id="rNom" data-nav placeholder="Nom"></div><div><label>Prénom <span class="req">*</span></label><input id="rPrenom" data-nav placeholder="Prénom"></div></div>
+<label>Surname <span class="req">*</span></label><input id="rSurname" data-nav placeholder="Surname">
+<div class="flex"><div><label>Ville <span class="req">*</span></label><input id="rVille" data-nav placeholder="Ex: Tanger"></div><div><label>Pays <span class="req">*</span></label><input id="rPays" data-nav placeholder="Maroc" value="Maroc"></div></div>
+<label>C.I.N <span class="req">**</span> <span style="font-weight:400">(pas obligatoire)</span></label><input id="rCin" data-nav placeholder="Optionnel - C.I.N"><div class="opt-note"><span class="req">**</span> Si tu l'ajoutes, ton code licence sera plus sécurisé et plus Pro. Si tu ne veux pas, c'est ton choix, tu peux le laisser vide.</div>
+<div class="flex"><div><label>Téléphone <span class="req">*</span></label><input id="rTel" data-nav placeholder="+212 6..."></div><div><label>Date de naissance <span class="req">*</span></label><input id="rNaiss" type="date" data-nav></div></div>
+<label>Sexe <span class="req">*</span></label><select id="rSexe" data-nav><option value="Homme">👨 Homme</option><option value="Femme">👩 Femme</option></select>
+<label>Gmail / Email <span class="req">*</span></label><input id="rEmail" data-nav placeholder="Ex: nom@gmail.com">
+<label>Tu veux quoi ? <span class="req">*</span></label><select id="rChoice" onchange="toggleChoice()"><option value="demo">🎁 Essayer Demo gratuite 15 jours - 0 DH</option><option value="pro">⭐ Entrer avec compte Pro - Code Licence</option></select>
+<div id="proChoiceBox" class="hidden"><label>Code Licence Pro reçu par WhatsApp / Gmail / SMS <span class="req">*</span></label><input id="rLicenceCode" data-nav placeholder="ZBRD-XXXX-XXXX"><p class="mut">Si tu n'as pas encore de code, choisis Demo d'abord, puis demande le code dans Licence / Pro. Tu recevras le code par WhatsApp / Gmail / SMS.</p></div>
+<label>Login que tu choisis <span class="req">*</span></label><input id="rLogin" data-nav placeholder="Ex: adam2026">
+<label>Mot de passe que tu choisis <span class="req">*</span></label><div class="flex"><input id="rPass" type="password" data-nav placeholder="Mot de passe"><button class="btn btnG" type="button" onclick="togglePass('rPass',this)">👁️ Afficher</button></div>
+<button class="btn btnP" style="width:100%" onclick="registerDemo()">🚀 Commencer mon essai gratuit 15 jours - 0 DH</button>
+<p class="small" style="text-align:center">Tu as déjà un compte ? <a href="#" onclick="showLoginForm();return false">Se connecter</a></p>
+<div id="loginForm" class="hidden"><label>Login <span class="req">*</span></label><input id="lLogin" placeholder="Ton login"><label>Mot de passe <span class="req">*</span></label><input id="lPass" type="password" placeholder="Mot de passe"><button class="btn btnS" style="width:100%" onclick="loginClient()">🔓 Se connecter</button></div>
+<div id="afterRegister" class="hidden"></div>
+</div>
+
+<div id="screen-app" class="hidden">
+<div class="hero"><div style="font-size:12px">👋 <span id="parentNameTxt">Parent</span> • <span id="licenceTxt"></span></div><h1 id="heroTitle">Programme d'aujourd'hui</h1><p id="packTxt"></p></div>
+<div id="demoBanner"></div>
+<div id="blockBanner"></div>
+<div id="status" class="hidden"></div>
+<div class="nav" id="nav">
+<button class="pill active" data-page="accueil" onclick="showPage('accueil')">🏠 Accueil</button>
+<button class="pill" data-page="enfants" onclick="showPage('enfants')">👧👦 Enfants</button>
+<button class="pill" data-page="programme" onclick="showPage('programme')">📅 Programme</button>
+<button class="pill" data-page="matieres" onclick="showPage('matieres')">📚 Matières</button>
+<button class="pill" data-page="activites" onclick="showPage('activites')">⚽ Activités</button>
+<button class="pill" data-page="devoirs" onclick="showPage('devoirs')">📝 Devoirs</button>
+<button class="pill" data-page="rappels" onclick="showPage('rappels')">🔔 Rappels</button>
+<button class="pill" data-page="params" onclick="showPage('params')">⚙️ Paramètres</button>
+<button class="pill" data-page="licence" onclick="showPage('licence')">🔑 Licence / Pro</button>
+</div>
+
+<div id="page-accueil"><div class="card"><div class="row"><div><b id="accChild">Tous</b><div class="mut" id="accCount"></div></div><div class="flex" style="max-width:300px"><button class="btn btnG" onclick="prevChild()">← Enfant précédent</button><button class="btn btnG" onclick="nextChild()">Enfant suivant →</button></div></div></div><div id="accList"></div></div>
+<div id="page-enfants" class="hidden"><div class="card"><h3 style="margin:0">➕ Ajouter un enfant <span id="childCountBadge"></span></h3><p class="mut">Demo: tous les boutons marchent, 0 DH. Max 2 enfants en demo.</p>
+<label>Nom <span class="req">*</span></label><input id="fNom" data-nav placeholder="Nom"><div class="flex"><div><label>Âge <span class="req">*</span></label><input id="fAge" type="number" data-nav placeholder="7"></div><div><label>Niveau <span class="req">*</span></label><select id="fNiveau"><option>Petite Section</option><option>Moyenne Section</option><option>Grande Section</option><option>CP</option><option>CE1</option><option>CE2</option><option>CM1</option><option selected>CM2</option><option>6ème</option><option>5ème</option><option>4ème</option><option>3ème</option></select></div></div><label>École <span class="req">*</span></label><input id="fEcole" data-nav value="École Al Amal">
+<div class="flex"><button class="btn btnG" onclick="focusPrevField('fNom')">← Champ précédent</button><button class="btn btnP" onclick="addChild()">➕ Ajouter</button><button class="btn btnG" onclick="focusNextField('fNom')">Champ suivant →</button></div></div><div id="enfantsList"></div></div>
+<div id="page-programme" class="hidden"><div id="form-programme"></div><div id="list-programme"></div></div>
+<div id="page-matieres" class="hidden"><div id="form-matieres"></div><div id="list-matieres"></div></div>
+<div id="page-activites" class="hidden"><div id="form-activites"></div><div id="list-activites"></div></div>
+<div id="page-devoirs" class="hidden"><div id="form-devoirs"></div><div id="list-devoirs"></div></div>
+<div id="page-rappels" class="hidden"><div id="form-rappels"></div><div id="list-rappels"></div></div>
+<div id="page-params" class="hidden"><div class="card"><h3 style="margin:0">⚙️ Paramètres</h3><label>Nom du parent <span class="req">*</span></label><input id="pParent" data-nav><label>Langue <span class="req">*</span></label><select id="pLang"><option value="FR">Français</option><option value="AR">Arabe / Darija</option></select><label><input type="checkbox" id="pNotif" checked style="width:auto"> Notifications</label><button class="btn btnS" style="width:100%;margin-top:10px" onclick="saveParams()">💾 Enregistrer</button><button class="btn btnR" style="width:100%;margin-top:8px" onclick="logout()">🚪 Déconnexion</button></div>
+<div class="card"><h3 style="margin:0">🛠️ Réparation & Garantie</h3><p class="mut">Garantie gratuite les 4 premiers mois. Après, réparation payante.</p><table><tr><th>Problème</th><th>Prix</th></tr><tr><td>1 bouton</td><td><b>200 DH</b></td></tr><tr><td>Plus de 3 boutons</td><td><b>800 DH</b></td></tr><tr><td>Système</td><td><b>1199 DH</b></td></tr><tr><td>Page + Système + Data</td><td><b>2300 DH</b></td></tr></table></div></div>
+<div id="page-licence" class="hidden"><div class="card"><h3 style="margin:0">🔑 Passer en Pro</h3><p class="mut" id="licenceInfo"></p><div id="packs"></div><label>Paiement <span class="req">*</span></label><select id="licPay"><option>Virement bancaire</option><option>Cash Plus</option><option>Wafa Cash</option></select><label>Code reçu / Reçu <span class="req">*</span></label><input id="licCodePay" placeholder="Code Cash Plus / Wafa Cash"><label>Photo du reçu</label><input id="licRecu" type="file" accept="image/*"><button class="btn btnO" style="width:100%;margin-top:8px" onclick="requestLicence()">📩 Demander le code licence Pro</button><hr><label>Entre ton code licence reçu par WhatsApp / Gmail / SMS <span class="req">*</span></label><input id="licInput" placeholder="ZBRD-XXXX-XXXX"><button class="btn btnP" style="width:100%" onclick="checkLicence()">✅ Activer avec ce code</button>
+<div class="card" style="background:#fef9c3;margin-top:12px"><b>Comment payer ?</b><p class="mut">1. Choisis ton pack ci-dessus<br>2. Paie par Virement / Cash Plus / Wafa Cash<br>3. Envoie le code du reçu ou la photo<br>4. Tu reçois le code licence par WhatsApp / Gmail / SMS</p><p class="mut"><b>Support WhatsApp: +212780717090</b></p><button class="btn btnS" onclick="contactDev()">📱 Contacter le support WhatsApp</button></div></div></div>
+</div>
+
+<div id="screen-dev-login" class="hidden"><div class="card devLock"><h2 style="margin:0">🔒 Partie Développeur</h2><p class="mut" style="color:#cbd5e1">Réservé au propriétaire. Accès: 5 clics sur Z-BrD.</p><label style="color:#fff">Mot de passe Développeur</label><div class="flex"><input id="devPass" type="password" placeholder="Mot de passe"><button class="btn btnG" onclick="togglePass('devPass',this)">👁️ Afficher</button></div><button class="btn btnP" style="width:100%;margin-top:8px" onclick="loginDev()">🔓 Entrer</button><button class="btn btnG" style="width:100%;margin-top:8px" onclick="closeDev()">← Fermer</button></div></div>
+<div id="screen-dev" class="hidden">
+<div class="card" style="background:#0f172a;color:#fff"><h2 style="margin:0">👑 Panneau Développeur</h2><div id="devStatsBar" style="background:#1e293b;border-radius:12px;padding:10px;margin-top:10px;display:flex;gap:12px;flex-wrap:wrap"><span>👀 <b id="devStatViews">0</b> ont vu</span><span>🎁 <b id="devStatDemo">0</b> essais</span><span>⭐ <b id="devStatPro">0</b> abonnés</span></div><p class="mut" style="color:#cbd5e1">Tu choisis le message que le client voit. Le client ne voit jamais "Développeur a bloqué".</p>
+<label style="color:#fff">Blocage global - Message à afficher</label><select id="globalReason"><option value="systeme">Problème dans le système</option><option value="database">Problème dans les bases de données</option><option value="maintenance_page">Page en maintenance</option><option value="miseajour">Demande la nouvelle version / Mise à jour</option><option value="connexion">Problème de connexion</option></select>
+<div class="flex"><button class="btn btnS" onclick="toggleGlobal(true)">✅ Activer app pour tous</button><button class="btn btnR" onclick="toggleGlobal(false)">⛔ Bloquer app pour tous</button><button class="btn btnG" onclick="closeDev()">← Fermer</button></div>
+<label style="color:#fff">Prix Pack 10 mois - 2 enfants (DH)</label><input id="price1" type="number" value="0"><label style="color:#fff">Prix Pack 1 an 10 mois - 4 enfants (DH)</label><input id="price2" type="number" value="0"><label style="color:#fff">Prix Pack 3 ans 10 mois - 5 enfants (DH)</label><input id="price3" type="number" value="999"><label style="color:#fff">Prix enfant supplémentaire (DH)</label><input id="priceExtra" type="number" value="200"><label style="color:#fff">WhatsApp Développeur / Support</label><input id="devWhatsInput" value="+212780717090"><button class="btn btnS" style="width:100%" onclick="saveDevSettings()">💾 Enregistrer prix + WhatsApp</button></div>
+<div class="card"><h3>🛠️ Tarifs Réparation (après garantie 4 mois)</h3><table><tr><td>1 bouton</td><td>200 DH</td></tr><tr><td>Plus de 3 boutons</td><td>800 DH</td></tr><tr><td>Système</td><td>1199 DH</td></tr><tr><td>Page + Système + Data</td><td>2300 DH</td></tr></table></div>
+<div class="card"><h3>👥 Tous les Clients - Clique sur un client pour voir sa page</h3><div id="clientsList"></div></div>
+<div id="devClientPage" class="hidden"></div>
+<div class="card"><h3>🧾 Reçus</h3><div id="receiptsList"></div></div>
+<div class="card"><h3>🔑 Codes Licence</h3><div id="codesList"></div></div>
+</div>
+
+</div>
+<div class="bottom"><div class="bottomIn"><button class="btn btnG" onclick="prevPage()">← Précédent</button><span class="count" id="bottomCount">Page Accueil</span><button class="btn btnG" onclick="nextPage()">Suivant →</button></div></div>
+<script>
+const URL="https://kyxygfjsfjgmvodezeom.supabase.co";
+const KEY="sb_publishable_zLFs2DPU3IUV5m4oNVFV3g_u9oLFPkR";
+const H={"apikey":KEY,"Authorization":"Bearer "+KEY,"Content-Type":"application/json","Prefer":"return=representation"};
+const DEV_PASS="&123lopezakaszbdmanhas123&";
+const DEV_WHATS="+212780717090";
+const PAGES=["accueil","enfants","programme","matieres","activites","devoirs","rappels","params","licence"];
+const BTNS=["add_child","delete_child","add_item","delete_item"];
+// Messages professionnels par type - jamais "Développeur"
+const MSG={
+ systeme:{t:"⚠️ Une erreur système est survenue",d:"Cher client, une erreur inattendue est survenue dans le système. Nos équipes travaillent à la résoudre. Veuillez réessayer dans quelques minutes. Merci pour votre patience."},
+ database:{t:"⚠️ Erreur de données - Base de données indisponible",d:"Cher client, vos données sont temporairement indisponibles suite à une erreur de base de données. Vos informations sont en sécurité et seront restaurées très rapidement. Veuillez réessayer plus tard."},
+ maintenance_page:{t:"🛠️ Cette page est en maintenance",d:"Cher client, cette page est actuellement en maintenance pour vous offrir une meilleure expérience. Elle sera de nouveau disponible très bientôt. Merci de votre compréhension."},
+ maintenance_btn:{t:"🛠️ Ce bouton est en maintenance",d:"Cher client, ce bouton est temporairement en maintenance pour améliorer votre expérience. Veuillez utiliser les autres options ou réessayer dans quelques minutes. Merci."},
+ miseajour:{t:"🔄 Mise à jour requise",d:"Cher client, une nouvelle version de l'application est disponible. Veuillez demander la mise à jour pour continuer à utiliser toutes les fonctionnalités en toute sécurité."},
+ connexion:{t:"📶 Problème de connexion",d:"Cher client, nous ne parvenons pas à vous connecter. Veuillez vérifier votre connexion internet, puis réessayer. Si le problème persiste, redémarrez votre appareil."},
+ phone:{t:"📱 Un problème a été détecté sur votre téléphone",d:"Cher client, un problème semble provenir de votre téléphone. Veuillez redémarrer votre téléphone, vider le cache du navigateur, puis réessayer. Si le problème persiste, contactez le support."},
+ pc:{t:"💻 Un problème a été détecté sur votre PC",d:"Cher client, un problème semble provenir de votre PC. Veuillez redémarrer votre PC, vider le cache de votre navigateur, puis réessayer. Si le problème persiste, contactez le support."}
+};
+function isPhone(){ return /Mobi|Android|iPhone/i.test(navigator.userAgent); }
+let curPage="accueil", rows=[], curChild="all", logoClicks=0, logoTimer=null;
+let store=JSON.parse(localStorage.getItem("zbrd_v10")||'{"clients":[],"codes":[],"receipts":[],"globalActive":true,"globalReason":"systeme","prices":{"p1":0,"p2":0,"p3":999,"extra":200},"devWhats":"+212780717090","current":null,"lastLogin":null}');
+function saveStore(){localStorage.setItem("zbrd_v10",JSON.stringify(store));}
+function esc(s){return (s||'').toString().replace(/</g,'&lt;');}
+function togglePass(id,btn){const el=document.getElementById(id); el.type=el.type==="password"?"text":"password"; btn.textContent=el.type==="password"?"👁️ Afficher":"🙈 Cacher";}
+function logoClick(){ logoClicks++; clearTimeout(logoTimer); logoTimer=setTimeout(()=>logoClicks=0,1500); if(logoClicks>=5){ logoClicks=0; document.getElementById('screen-dev-login').classList.remove('hidden'); document.getElementById('screen-dev-login').scrollIntoView({behavior:'smooth'}); } }
+// Gestion du banner blocage : temporaire pour bouton, persistant pour page/systeme/data
+let persistentBlock=null; // {reason, context} reste affiché
+function clearTempBlock(){ if(!persistentBlock) document.getElementById('blockBanner').innerHTML=''; }
+function showBlockBox(reasonKey, context, persistent){
+  let k=reasonKey||"systeme"; if(k==="auto_device") k=isPhone()?"phone":"pc";
+  const m=MSG[k]||MSG.systeme;
+  // Si blocage page/systeme/data -> persistant + numéro toujours visible
+  // Si blocage 1 seul bouton -> temporaire, et numéro seulement si >3 jours de blocage (simulé par blockedSince)
+  const c=store.current;
+  let showPhone=false, phoneNote="";
+  if(persistent){ showPhone=true; phoneNote="<p><b>Support WhatsApp: +212780717090</b> - En cas d'erreur Data / Système / Page, contacte le support avec une capture d'écran.</p>"; }
+  else {
+    // bouton seul : vérifier depuis quand bloqué
+    const since=c && c.blockedSince && c.blockedSince[context] ? new Date(c.blockedSince[context]) : new Date();
+    const daysB=Math.floor((new Date()-since)/(1000*60*60*24));
+    if(daysB>=3){ showPhone=true; phoneNote="<p><b>Ce bouton ne fonctionne pas depuis plus de 3 jours.</b><br>Support WhatsApp: <b>+212780717090</b> - Envoie le message d'erreur + une capture d'écran.</p>"; }
+    else { phoneNote="<p class='mut'>Si le problème persiste plus de 3 jours, le numéro du support s'affichera ici.</p>"; }
+  }
+  if(persistent) persistentBlock={reason:k,context:context};
+  const isRed = ['maintenance_page','maintenance_btn','miseajour'].includes(k);
+  const boxClass = isRed ? 'redAlert' : 'blockBox';
+  document.getElementById('blockBanner').innerHTML=`<div class="${boxClass}"><b>${m.t}</b><p>${m.d}</p><p class="mut">Code erreur: ${esc(context)} • Réf: ${esc(k)}</p>${phoneNote}${showPhone?`<div class="flex"><button class="btn btnS" onclick="sendErrorWhatsApp('${esc(context)}','${esc(m.t)}')">📱 Envoyer par WhatsApp</button><button class="btn btnG" onclick="sendErrorSMS('${esc(context)}','${esc(m.t)}')">💬 Envoyer par SMS</button><button class="btn btnG" onclick="alert('Prends une capture d\\'écran de cette erreur et envoie-la au support WhatsApp ou par SMS au +212780717090')">📸 Envoyer une capture d'écran de l'erreur</button></div><p class="mut">Tu peux aussi envoyer une capture d'écran de l'erreur par WhatsApp ou par SMS au +212780717090.</p>`:''}</div>`;
+  document.getElementById('blockBanner').scrollIntoView({behavior:'smooth'});
+}
+function sendErrorWhatsApp(context,title){
+  const c=store.current||{};
+  const txt="Bonjour, j'ai une erreur Z-BrD.\nClient: "+(c.nom||"")+" "+(c.prenom||"")+" - Login: "+(c.login||"")+" - ID: "+(c.id||c.login)+"\nErreur: "+title+" - "+context+"\nTéléphone: "+(c.tel||"")+"\nJe joins une capture d'écran.";
+  window.open("https://wa.me/212780717090?text="+encodeURIComponent(txt),"_blank");
+}
+function showPage(p){
+  const c=store.current;
+  // Effacer message temporaire d'un bouton seul quand on change de page/bouton
+  clearTempBlock();
+  // Si blocage persistant (page/systeme), le réafficher
+  if(persistentBlock){ showBlockBox(persistentBlock.reason, persistentBlock.context, true); }
+  if(c && c.blockedPages && c.blockedPages[p]){
+    const reason=c.blockedPages[p];
+    // Page bloquée = persistant
+    showBlockBox(reason,"Page: "+p, true);
+    alert((MSG[reason]||MSG.systeme).t);
+    return;
+  }
+  if(!store.globalActive){
+    showBlockBox(store.globalReason||"systeme","Application - Système / Data", true);
+    alert((MSG[store.globalReason||"systeme"]||MSG.systeme).t);
+    return;
+  }
+  // Navigation Précédent / Suivant DOIT afficher la page du bouton
+  curPage=p; PAGES.forEach(x=>{const el=document.getElementById('page-'+x); if(el) el.classList.toggle('hidden',x!==p);});
+  document.querySelectorAll('.pill').forEach(el=>el.classList.toggle('active',el.dataset.page===p));
+  document.getElementById('bottomCount').textContent="Page "+p+" • "+(c?c.nom:"");
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextPage(){ let i=PAGES.indexOf(curPage); const np=PAGES[Math.min(PAGES.length-1,i+1)]; showPage(np); }
+function prevPage(){ let i=PAGES.indexOf(curPage); const pp=PAGES[Math.max(0,i-1)]; showPage(pp); }
+function focusNextField(id){ const els=[...document.querySelectorAll('input[data-nav],select[data-nav]')]; const idx=els.findIndex(e=>e.id===id); if(idx>=0 && els[idx+1]) els[idx+1].focus(); }
+function focusPrevField(id){ const els=[...document.querySelectorAll('input[data-nav],select[data-nav]')]; const idx=els.findIndex(e=>e.id===id); if(idx>0) els[idx-1].focus(); }
+document.addEventListener('keydown',e=>{ if(e.key==='Enter' && e.target.dataset && e.target.dataset.nav){ e.preventDefault(); focusNextField(e.target.id); }});
+function daysLeft(c){ if(!c || !c.demoStart) return 15; const s=new Date(c.demoStart); const diff=Math.floor((new Date()-s)/(1000*60*60*24)); return 15-diff; }
+function isDemoExpired(c){ return c && c.plan==="demo" && daysLeft(c)<=0; }
+function renderPacks(){
+  const pr=store.prices;
+  const packs=[{id:'pack1',name:'Pack 10 mois',detail:'2 enfants inclus • Enfant sup. 200 DH / enfant • Tous les boutons actifs • Programme + Matières + Activités + Devoirs + Rappels',price:pr.p1,months:10,max:2},{id:'pack2',name:'Pack 1 an 10 mois',detail:'4 enfants inclus • Enfant sup. 200 DH / enfant • Tous les boutons actifs',price:pr.p2,months:22,max:4},{id:'pack3',name:'Pack 3 ans 10 mois',detail:'5 enfants inclus • Offre 999 DH • Tous les boutons actifs',price:pr.p3,months:46,max:5}];
+  document.getElementById('packs').innerHTML=packs.map((p,i)=>`<div class="pack ${i===0?'active':''}" data-pack="${p.id}" onclick="selectPack('${p.id}')"><b>${p.name}</b><div class="mut">${p.detail}</div><div><b>${p.price} DH</b> • ${p.months} mois • Max ${p.max} enfants</div><div class="mut">Paiement: Virement / Cash Plus / Wafa Cash • Envoie code reçu ou photo reçu</div></div>`).join('');
+  window._packSel='pack1';
+}
+function selectPack(id){ window._packSel=id; document.querySelectorAll('.pack').forEach(p=>p.classList.toggle('active',p.dataset.pack===id)); }
+function makeDeviceId(){ let d=localStorage.getItem("zbrd_device"); if(!d){ d="DEV-"+Math.random().toString(36).slice(2,10).toUpperCase(); localStorage.setItem("zbrd_device",d);} return d; }
+function registerDemo(){
+  const sexe=document.getElementById('rSexe')?document.getElementById('rSexe').value:'Homme'; const choice=document.getElementById('rChoice')?document.getElementById('rChoice').value:'demo'; const licenceInput=document.getElementById('rLicenceCode')?document.getElementById('rLicenceCode').value.trim():''; const c={id:"CL-"+Date.now(),deviceId:makeDeviceId(),sexe:sexe,email:document.getElementById('rEmail')?document.getElementById('rEmail').value.trim():'',nom:document.getElementById('rNom').value.trim(),prenom:document.getElementById('rPrenom').value.trim(),surname:document.getElementById('rSurname').value.trim(),ville:document.getElementById('rVille').value.trim(),pays:document.getElementById('rPays').value.trim(),cin:document.getElementById('rCin').value.trim(),tel:document.getElementById('rTel').value.trim(),naiss:document.getElementById('rNaiss').value,login:document.getElementById('rLogin').value.trim(),pass:document.getElementById('rPass').value,choice:choice,licenceInput:licenceInput,plan:"demo",demoStart:new Date().toISOString(),status:"demo",blocked:false,blockedPages:{},blockedBtns:{},blockedSince:{},licence:"",created:new Date().toLocaleString(),pack:"demo",lastSeen:new Date().toISOString()};
+  if(!c.nom||!c.prenom||!c.surname||!c.ville||!c.pays||!c.tel||!c.naiss||!c.login||!c.pass||!c.email) return alert("Remplis tous les champs avec * rouge. Seul C.I.N ** est optionnel.");
+  if(choice==="pro" && !licenceInput) return alert("Tu as choisi Pro. Entre ton code licence reçu par WhatsApp / Gmail / SMS, ou choisis Demo d'abord.");
+  if(store.clients.find(x=>x.login===c.login)) return alert("Ce login existe déjà. Connecte-toi avec ce login.");
+  if(choice==="pro"){ c.plan="pro"; c.status="active"; c.licence=licenceInput; }
+  store.clients.push(c); syncClientToSupabase(c); store.current=c; store.lastLogin=c.login; saveStore();
+  document.getElementById('afterRegister').classList.remove('hidden');
+  document.getElementById('afterRegister').innerHTML=`<div style="background:#dcfce7;padding:12px;border-radius:12px;margin-top:10px"><b>🎁 Essai gratuit activé ! 15 jours - 0 DH</b><br>Bienvenue ${esc(c.prenom)} ! Ton compte est enregistré sur ce téléphone. Même si tu sors et tu reviens, l'application restera activée.</div>`;
+  enterApp();
+}
+function toggleChoice(){ const v=document.getElementById('rChoice').value; document.getElementById('proChoiceBox').classList.toggle('hidden', v!=='pro'); }
+function showLoginForm(){ document.getElementById('loginForm').classList.toggle('hidden'); }
+function loginClient(){
+  const l=document.getElementById('lLogin').value.trim(), p=document.getElementById('lPass').value;
+  const c=store.clients.find(x=>x.login===l && x.pass===p);
+  if(!c){ store.clients.push({id:"CL-"+Date.now(),deviceId:makeDeviceId(),nom:"INCONNU",prenom:"Inconnu",login:l,pass:p,status:"inconnu",blocked:true,blockedPages:{},blockedBtns:{},created:new Date().toLocaleString(),ville:"?",tel:"?",plan:"inconnu"}); saveStore(); return alert("Compte inconnu signalé. Contacte le support au +212780717090"); }
+  if(c.blocked) { showBlockBox(c.blockReason||"systeme","Compte bloqué",true); return alert((MSG[c.blockReason||"systeme"]||MSG.systeme).t); }
+  // Reconnaissance: même login + même téléphone / device -> compteur demo NE redémarre PAS, il continue exactement
+  c.lastSeen=new Date().toISOString(); c.deviceId=c.deviceId||makeDeviceId(); store.current=c; store.lastLogin=c.login; saveStore();
+  // Si déconnecté et revenu après 3 jours, on le reconnaît et on lui montre exactement ce qu'il reste
+  const dl=daysLeft(c);
+  if(c.plan==="demo" && dl<=3 && dl>0) alert("Bonjour "+c.prenom+", on t'a reconnu par ton login. Il te reste exactement "+dl+" jours de demo.");
+  enterApp();
+}
+function enterApp(){
+  const sb=document.getElementById('statsBar'); if(sb) sb.style.display='none';
+  const c=store.current;
+  document.getElementById('screen-login').classList.add('hidden');
+  document.getElementById('screen-app').classList.remove('hidden');
+  document.getElementById('parentNameTxt').textContent=(c.prenom||"")+" "+(c.nom||"");
+  document.getElementById('packTxt').textContent=c.plan==="demo" ? "🎁 Essai gratuit • "+daysLeft(c)+" jours restants • 0 DH" : "⭐ Compte Pro activé • Pack "+(c.pack||"");
+  document.getElementById('licenceTxt').textContent=c.plan==="demo"?"Demo "+daysLeft(c)+" jours":"Pro";
+  document.getElementById('licenceInfo').textContent="Client: "+c.nom+" • Plan: "+c.plan+" • Jours restants demo: "+daysLeft(c);
+  const b=document.getElementById('demoBanner');
+  if(c.plan==="demo"){
+    if(isDemoExpired(c)){ b.innerHTML=`<div class="redAlert">⛔ Ton essai gratuit de 15 jours est terminé.<br>Pour continuer, achète l'accès Pro ci-dessous.</div>`; }
+    else if(daysLeft(c)<=3){
+      const pr=store.prices;
+      b.innerHTML=`<div class="redAlert">🔴 Il te reste ${daysLeft(c)} jours !<br>Si tu veux continuer à utiliser l'application, tu dois acheter l'accès Pro.<br><br><b>📦 Tes choix:</b><br>• Pack 10 mois - 2 enfants - ${pr.p1} DH - Enfant sup. ${pr.extra} DH<br>• Pack 1 an 10 mois - 4 enfants - ${pr.p2} DH - Enfant sup. ${pr.extra} DH<br>• Pack 3 ans 10 mois - 5 enfants - ${pr.p3} DH (offre 999 DH)<br><br><b>💳 Comment payer ?</b><br>1. Choisis ton pack dans Licence / Pro<br>2. Paie par Virement bancaire / Cash Plus / Wafa Cash<br>3. Envoie le code du reçu ou la photo du reçu<br>4. Tu reçois le code licence par WhatsApp / Gmail / SMS<br>5. Entre le code pour activer<br><br><b>Tes infos:</b> ${esc(c.nom)} ${esc(c.prenom)} • ${esc(c.ville)} • ${esc(c.tel)} • ID: ${esc(c.id)}<br><button class="btn btnD" onclick="showPage('licence')">🔑 Acheter l'accès Pro maintenant</button></div>`;
+    }
+    else { b.innerHTML=`<div style="background:#dcfce7;padding:12px;border-radius:12px;font-weight:700">🎁 Essai gratuit: il te reste ${daysLeft(c)} jours • 0 DH • Tous les boutons marchent • <a href="#" onclick="showPage('licence');return false">Passer en Pro</a></div>`; }
+  } else { b.innerHTML=`<div style="background:#dcfce7;padding:12px;border-radius:12px;font-weight:700">⭐ Compte Pro activé • Merci !</div>`; }
+  load();
+}
+function logout(){ const sb=document.getElementById('statsBar'); if(sb) sb.style.display='flex'; store.current=null; saveStore(); location.reload(); }
+function requestLicence(){
+  const c=store.current; c.pack=window._packSel||'pack1'; c.pay=document.getElementById('licPay').value; c.codePay=document.getElementById('licCodePay').value.trim(); c.recu=document.getElementById('licRecu').value?"Photo reçu envoyée":""; c.status="demande_licence"; saveStore();
+  store.receipts.push({login:c.login,nom:c.nom+" "+c.prenom,code:c.codePay,recu:c.recu,pay:c.pay,pack:c.pack,date:new Date().toLocaleString()}); saveStore();
+  alert("📩 Demande envoyée ! Tu recevras le code licence par WhatsApp / Gmail / SMS au +212780717090.");
+  showPage('licence');
+}
+function checkLicence(){
+  const code=document.getElementById('licInput').value.trim();
+  const found=store.codes.find(x=>x.code===code && x.login===store.current.login);
+  if(!found) return alert("❌ Code incorrect ou pas pour ton compte. Vérifie le code reçu par WhatsApp / Gmail / SMS.");
+  store.current.plan="pro"; store.current.status="active"; store.current.licence=code; const idx=store.clients.findIndex(x=>x.login===store.current.login); if(idx>=0){store.clients[idx].plan="pro"; store.clients[idx].status="active"; store.clients[idx].licence=code;} saveStore(); alert("✅ Pro activé ! Merci."); enterApp();
+}
+function sendErrorSMS(context,title){
+  const c=store.current||{};
+  const txt="Erreur Z-BrD - Client: "+(c.nom||"")+" "+(c.prenom||"")+" - Login: "+(c.login||"")+" - Erreur: "+title+" - "+context+" - Tel: "+(c.tel||"")+" - J'envoie aussi une capture d'écran.";
+  window.open("sms:+212780717090?body="+encodeURIComponent(txt),"_blank");
+}
+function contactDev(){ window.open("https://wa.me/212780717090","_blank"); }
+function closeDev(){ document.getElementById('screen-dev-login').classList.add('hidden'); document.getElementById('screen-dev').classList.add('hidden'); }
+function loginDev(){
+  if(document.getElementById('devPass').value!==DEV_PASS) return alert("❌ Mot de passe incorrect.");
+  document.getElementById('screen-dev-login').classList.add('hidden');
+  document.getElementById('screen-dev').classList.remove('hidden');
+  document.getElementById('price1').value=store.prices.p1; document.getElementById('price2').value=store.prices.p2; document.getElementById('price3').value=store.prices.p3; document.getElementById('priceExtra').value=store.prices.extra; document.getElementById('devWhatsInput').value=store.devWhats;
+  renderDev(); document.getElementById('screen-dev').scrollIntoView({behavior:'smooth'});
+}
+function saveDevSettings(){ store.prices={p1:+document.getElementById('price1').value||0,p2:+document.getElementById('price2').value||0,p3:+document.getElementById('price3').value||999,extra:+document.getElementById('priceExtra').value||200}; store.devWhats=document.getElementById('devWhatsInput').value||store.devWhats; saveStore(); renderPacks(); updateStats(); alert("✅ Enregistré."); }
+function toggleGlobal(on){ store.globalActive=on; store.globalReason=document.getElementById('globalReason').value; if(!on) persistentBlock={reason:store.globalReason,context:"Application - Système / Data"}; else persistentBlock=null; saveStore(); alert(on?"✅ App activée pour tous":"⛔ App bloquée pour tous - Message: "+(MSG[store.globalReason]||MSG.systeme).t); }
+function renderDev(){
+  const reasonOpts=`<option value="systeme" style='background:#fef3c7'>Problème système</option><option value="database">Problème bases de données / Data</option><option value="maintenance_page">Page en maintenance</option><option value="maintenance_btn">Bouton en maintenance</option><option value="miseajour">Nouvelle version / Mise à jour</option><option value="connexion">Problème de connexion</option><option value="auto_device">Problème depuis son téléphone / PC (auto)</option><option value="phone">Problème depuis son téléphone</option><option value="pc">Problème depuis son PC</option>`;
+  document.getElementById('clientsList').innerHTML = store.clients.length? store.clients.map((c,i)=>`
+  <div class="card"><b>${esc(c.nom)} ${esc(c.prenom||'')}</b> <span class="mut">• Login: ${esc(c.login)} • ID: ${esc(c.id||'')} • Device: ${esc(c.deviceId||'')} • Plan: ${esc(c.plan||'')} • Jours demo: ${daysLeft(c)} • Statut: ${esc(c.status||'')}</span><br>
+  <span class="mut">Nom: ${esc(c.nom)} | Prénom: ${esc(c.prenom)} | Surname: ${esc(c.surname||'—')} | Ville: ${esc(c.ville||'')} | Pays: ${esc(c.pays||'')} | CIN: ${esc(c.cin||'—')} | Tél: ${esc(c.tel||'')} | Naissance: ${esc(c.naiss||'—')}</span><br>
+  <span class="mut">📧 Gmail / Email: <b>${esc(c.email||'—')}</b> | Login: <b>${esc(c.login)}</b> | Mot de passe: <b>${esc(c.pass||'—')}</b> | Code Licence: <b>${esc(c.licence||'—')}</b></span><br>
+  <div class="flex" style="margin-top:8px"><button class="btn btnS" onclick="sendProMsg(${i},'whatsapp')">📱 Envoyer infos par WhatsApp</button><button class="btn btnG" onclick="sendProMsg(${i},'gmail')">📧 Envoyer infos par Gmail</button><button class="btn btnG" onclick="sendProMsg(${i},'sms')">💬 Envoyer infos par SMS</button><button class="btn btnP" onclick="sendProMsg(${i},'licence')">🔑 Renvoyer le code licence</button></div>
+  <p class="mut">Si le client a oublié son Login / Mot de passe / Code Licence, clique sur un bouton ci-dessus. Le message professionnel sera envoyé avec toutes ses infos.</p>
+  <span class="mut">Pack: ${esc(c.pack||'')} • Paiement: ${esc(c.pay||'')} • Code reçu: ${esc(c.codePay||'—')} • Reçu: ${esc(c.recu||'—')} • Licence: ${esc(c.licence||'—')} • Créé: ${esc(c.created||'')} • Dernière visite: ${esc(c.lastSeen||'')}</span>
+  <div style="margin-top:10px"><b>🎛️ Bloquer une page - Message professionnel (client ne voit jamais "Développeur"):</b><br>
+  ${PAGES.map(p=>`<div style="display:flex;gap:6px;align-items:center;margin:4px 0"><span style="min-width:90px;font-size:13px">${p}</span><select id="rp-${i}-${p}">${reasonOpts}</select><button class="toggle ${c.blockedPages && c.blockedPages[p]?'off':'on'}" onclick="togglePage(${i},'${p}')"> ${c.blockedPages && c.blockedPages[p]?'⛔ Bloqué':'✅ Actif'}</button></div>`).join('')}
+  <b style="margin-top:8px;display:block">🎛️ Bloquer un bouton:</b>
+  ${BTNS.map(b=>`<div style="display:flex;gap:6px;align-items:center;margin:4px 0"><span style="min-width:110px;font-size:13px">${b}</span><select id="rb-${i}-${b}">${reasonOpts}</select><button class="toggle ${c.blockedBtns && c.blockedBtns[b]?'off':'on'}" onclick="toggleBtn(${i},'${b}')"> ${c.blockedBtns && c.blockedBtns[b]?'⛔ Bloqué':'✅ Actif'}</button></div>`).join('')}
+  </div>
+  <div class="flex" style="margin-top:10px"><button class="btn btnS" onclick="devAction(${i},'active')">✅ Activer compte</button><button class="btn btnR" onclick="devAction(${i},'blocked')">⛔ Bloquer compte</button><button class="btn btnP" onclick="sendLicence(${i})">🔑 OK - Envoyer code licence</button><button class="btn btnO" onclick="extendDemo(${i})">🎁 +15 jours demo</button><button class="btn btnG" onclick="devDelete(${i})">🗑️ Supprimer</button></div></div>`).join('') : 'Aucun client.';
+  document.getElementById('receiptsList').innerHTML = store.receipts.length? store.receipts.map(r=>`<div class="card">🧾 <b>${esc(r.login)}</b> • ${esc(r.pay)} • Pack ${esc(r.pack||'')} • Code: ${esc(r.code)} • ${esc(r.recu)} • ${esc(r.date)}</div>`).join('') : 'Aucun reçu.';
+  // Colorer les selects d'erreur chez Développeur comme chez le client: rouge = maintenance / mise à jour, jaune = autres
+  setTimeout(()=>{ document.querySelectorAll('[id^="rp-"],[id^="rb-"]').forEach(sel=>{ const v=sel.value; const isRed=['maintenance_page','maintenance_btn','miseajour'].includes(v); sel.style.background=isRed?'#fee2e2':'#fef3c7'; sel.style.border=isRed?'2px solid #ef4444':'1px solid #f59e0b'; sel.style.fontWeight='700'; sel.onchange=()=>{ const vv=sel.value; const r=['maintenance_page','maintenance_btn','miseajour'].includes(vv); sel.style.background=r?'#fee2e2':'#fef3c7'; sel.style.border=r?'2px solid #ef4444':'1px solid #f59e0b'; }; }); },50);
+  // V13: Remplacer la liste longue par une liste cliquable - chaque client a sa page
+  document.getElementById('clientsList').innerHTML = store.clients.length? store.clients.map((c,i)=>{
+    const icon=c.sexe==='Femme'?'👩':'👨';
+    return `<div class="card" style="cursor:pointer" onclick="openClientPage(${i})"><div class="row"><div><b style="font-size:18px">${icon} ${esc(c.nom)} ${esc(c.prenom||'')}</b><div class="mut">Login: ${esc(c.login)} • ${esc(c.ville||'')} • ${esc(c.tel||'')} • Plan: ${esc(c.plan||'')} • ${esc(c.status||'')}</div></div><button class="btn btnP" onclick="event.stopPropagation();openClientPage(${i})">Ouvrir sa page →</button></div></div>`;
+  }).join('') : 'Aucun client.';
+  updateStats();
+  document.getElementById('codesList').innerHTML = store.codes.length? store.codes.map(c=>`<div class="card">🔑 <b>${c.code}</b> → ${esc(c.login)} • ${c.date} • Envoyé par WhatsApp / Gmail / SMS</div>`).join('') : 'Aucun code.';
+}
+function proMessage(c, type){
+  const base="Bonjour "+(c.prenom||"")+" "+(c.nom||"")+",\n\nMerci d'utiliser Z-BrD. Voici vos informations de compte, de la part du Support Z-BrD :\n\n• Nom: "+(c.nom||"")+"\n• Prénom: "+(c.prenom||"")+"\n• Ville: "+(c.ville||"")+" • Pays: "+(c.pays||"")+"\n• Téléphone: "+(c.tel||"")+"\n• Gmail: "+(c.email||"")+"\n• Login: "+(c.login||"")+"\n• Mot de passe: "+(c.pass||"")+"\n• Code Licence: "+(c.licence||"—")+"\n• Pack: "+(c.pack||c.choice||"")+"\n\nSi vous avez oublié votre mot de passe ou votre code licence, utilisez ces informations pour vous reconnecter.\n\nPour toute aide, contactez le Support Z-BrD au +212780717090.\n\nCordialement,\nSupport Z-BrD";
+  if(type==='licence') return "Bonjour "+(c.prenom||"")+",\n\nVoici votre code licence Z-BrD : "+(c.licence||"—")+"\n\nEntrez ce code dans l'application, onglet Licence / Pro, puis cliquez sur Activer.\n\nMerci, Support Z-BrD - WhatsApp +212780717090";
+  return base;
+}
+function sendProMsg(i, channel){
+  const c=store.clients[i]; const msg=proMessage(c, channel==='licence'?'licence':'all');
+  if(channel==='whatsapp'){ window.open("https://wa.me/"+(c.tel||"").replace(/[^0-9]/g,'')+"?text="+encodeURIComponent(msg),"_blank"); }
+  else if(channel==='gmail'){ window.open("mailto:"+(c.email||"")+"?subject="+encodeURIComponent("Vos informations Z-BrD - Support")+"&body="+encodeURIComponent(msg),"_blank"); }
+  else if(channel==='sms'){ window.open("sms:"+(c.tel||"").replace(/[^0-9]/g,'')+"?body="+encodeURIComponent(msg),"_blank"); }
+  else if(channel==='licence'){ window.open("https://wa.me/"+(c.tel||"").replace(/[^0-9]/g,'')+"?text="+encodeURIComponent(msg),"_blank"); }
+  alert("✅ Message professionnel préparé pour "+c.login+" par "+channel.toUpperCase()+" - Vérifie et envoie.");
+}
+// --- V13: Stats + Page par client ---
+function updateStats(){
+  const views = store.stats?.views||0;
+  const demo = store.clients.filter(c=>c.plan==='demo'||c.choice==='demo').length;
+  const pro = store.clients.filter(c=>c.plan==='pro').length;
+  const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('statViews',views); set('statDemo',demo); set('statPro',pro);
+  set('devStatViews',views); set('devStatDemo',demo); set('devStatPro',pro);
+}
+function openClientPage(i){
+  const c=store.clients[i];
+  const icon = c.sexe==='Femme' ? '👩' : '👨';
+  const reasonOpts=`<option value="systeme">Problème système</option><option value="database">Problème bases de données / Data</option><option value="maintenance_page">Page en maintenance</option><option value="maintenance_btn">Bouton en maintenance</option><option value="miseajour">Nouvelle version / Mise à jour</option><option value="connexion">Problème de connexion</option><option value="auto_device">Problème depuis son téléphone / PC (auto)</option><option value="phone">Problème depuis son téléphone</option><option value="pc">Problème depuis son PC</option>`;
+  const pages=["accueil","enfants","programme","matieres","activites","devoirs","rappels","params","licence"];
+  const btns=["add_child","delete_child","add_item","delete_item"];
+  document.getElementById('devClientPage').classList.remove('hidden');
+  document.getElementById('devClientPage').innerHTML=`
+  <div class="card" style="border:2px solid #2563eb">
+    <button class="btn btnG" onclick="closeClientPage()">← Retour à la liste des clients</button>
+    <div style="text-align:center;margin:14px 0"><div style="font-size:64px">${icon}</div>
+    <div style="background:#fee2e2;border:3px solid #ef4444;border-radius:14px;padding:14px;margin:12px auto;max-width:520px;text-align:center">
+      <div style="color:#991b1b;font-size:13px;font-weight:800">🔑 CODE LICENCE - VISIBLE UNIQUEMENT CHEZ LE DÉVELOPPEUR</div>
+      <div style="color:#991b1b;font-size:24px;font-weight:800;letter-spacing:1px;margin:6px 0">${esc(c.licence||'— PAS ENCORE GÉNÉRÉ —')}</div>
+      <div style="color:#991b1b;font-size:12px">${c.plan==='demo' ? 'Pack Essai Demo - Code pas encore généré. Génère-le avec le bouton OK - Envoyer code licence ci-dessous.' : 'Pack Abonnement Pro - Ce code est celui du client.'}</div>
+    </div><h1 style="font-size:28px;margin:6px 0">${esc(c.nom)} ${esc(c.prenom||'')}</h1><p class="mut">${icon} ${esc(c.sexe||'')} • Login: <b>${esc(c.login)}</b> • ID: ${esc(c.id||'')} • Plan: ${esc(c.plan||'')} • Jours demo: ${daysLeft(c)}</p></div>
+    <table><tr><th>Champ</th><th>Valeur</th></tr>
+    <tr><td>Nom</td><td>${esc(c.nom)}</td></tr><tr><td>Prénom</td><td>${esc(c.prenom)}</td></tr><tr><td>Surname</td><td>${esc(c.surname||'—')}</td></tr><tr><td>Sexe</td><td>${icon} ${esc(c.sexe||'—')}</td></tr><tr><td>Ville</td><td>${esc(c.ville||'')}</td></tr><tr><td>Pays</td><td>${esc(c.pays||'')}</td></tr><tr><td>C.I.N</td><td>${esc(c.cin||'—')}</td></tr><tr><td>Téléphone</td><td>${esc(c.tel||'')}</td></tr><tr><td>Gmail / Email</td><td>${esc(c.email||'—')}</td></tr><tr><td>Date naissance</td><td>${esc(c.naiss||'—')}</td></tr><tr><td>Login</td><td><b>${esc(c.login)}</b></td></tr><tr><td>Mot de passe</td><td><b>${esc(c.pass||'—')}</b></td></tr><tr><td>Code Licence</td><td><span style='color:#991b1b;font-weight:800'>${esc(c.licence||'—')}</span></td></tr><tr><td>Pack</td><td>${esc(c.pack||'')}</td></tr><tr><td>Paiement</td><td>${esc(c.pay||'')}</td></tr><tr><td>Code reçu</td><td>${esc(c.codePay||'—')}</td></tr><tr><td>Reçu</td><td>${esc(c.recu||'—')}</td></tr><tr><td>Device</td><td>${esc(c.deviceId||'')}</td></tr><tr><td>Créé</td><td>${esc(c.created||'')}</td></tr><tr><td>Dernière visite</td><td>${esc(c.lastSeen||'')}</td></tr></table>
+    <h3>🎛️ Bloquer une page - Message que le client verra</h3>
+    ${pages.map(pp=>`<div style="display:flex;gap:6px;align-items:center;margin:4px 0"><span style="min-width:90px;font-size:13px">${pp}</span><select id="rp2-${pp}">${reasonOpts}</select><button class="toggle ${c.blockedPages && c.blockedPages[pp]?'off':'on'}" onclick="togglePage(${i},'${pp}');openClientPage(${i})"> ${c.blockedPages && c.blockedPages[pp]?'⛔ Bloqué':'✅ Actif'}</button></div>`).join('')}
+    <h3>🎛️ Bloquer un bouton</h3>
+    ${btns.map(bb=>`<div style="display:flex;gap:6px;align-items:center;margin:4px 0"><span style="min-width:110px;font-size:13px">${bb}</span><select id="rb2-${bb}">${reasonOpts}</select><button class="toggle ${c.blockedBtns && c.blockedBtns[bb]?'off':'on'}" onclick="toggleBtn(${i},'${bb}');openClientPage(${i})"> ${c.blockedBtns && c.blockedBtns[bb]?'⛔ Bloqué':'✅ Actif'}</button></div>`).join('')}
+    <h3>📩 Renvoyer les infos</h3>
+    <div class="flex"><button class="btn btnS" onclick="sendProMsg(${i},'whatsapp')">📱 WhatsApp</button><button class="btn btnG" onclick="sendProMsg(${i},'gmail')">📧 Gmail</button><button class="btn btnG" onclick="sendProMsg(${i},'sms')">💬 SMS</button><button class="btn btnP" onclick="sendProMsg(${i},'licence')">🔑 Renvoyer code licence</button></div>
+    <div class="flex" style="margin-top:10px"><button class="btn btnS" onclick="devAction(${i},'active');openClientPage(${i})">✅ Activer compte</button><button class="btn btnR" onclick="devAction(${i},'blocked');openClientPage(${i})">⛔ Bloquer compte</button><button class="btn btnP" onclick="sendLicence(${i});openClientPage(${i})">🔑 OK - Envoyer code licence</button><button class="btn btnO" onclick="extendDemo(${i});openClientPage(${i})">🎁 +15 jours demo</button><button class="btn btnG" onclick="devDelete(${i});closeClientPage();renderDev()">🗑️ Supprimer</button></div>
+  </div>`;
+  document.getElementById('devClientPage').scrollIntoView({behavior:'smooth'});
+  // color selects in detail page
+  setTimeout(()=>{ document.querySelectorAll('[id^="rp2-"],[id^="rb2-"]').forEach(sel=>{ const v=sel.value; const isRed=['maintenance_page','maintenance_btn','miseajour'].includes(v); sel.style.background=isRed?'#fee2e2':'#fef3c7'; sel.style.border=isRed?'2px solid #ef4444':'1px solid #f59e0b'; sel.onchange=()=>{ const vv=sel.value; const r=['maintenance_page','maintenance_btn','miseajour'].includes(vv); sel.style.background=r?'#fee2e2':'#fef3c7'; sel.style.border=r?'2px solid #ef4444':'1px solid #f59e0b'; }; }); },50);
+}
+function closeClientPage(){ document.getElementById('devClientPage').classList.add('hidden'); document.getElementById('devClientPage').innerHTML=''; }
+function togglePage(i,p){ const c=store.clients[i]; c.blockedPages=c.blockedPages||{}; if(c.blockedPages[p]){ delete c.blockedPages[p]; if(persistentBlock && persistentBlock.context==="Page: "+p) persistentBlock=null; } else { const sel=document.getElementById('rp-'+i+'-'+p); c.blockedPages[p]=sel?sel.value:"systeme"; } if(store.current && store.current.login===c.login) store.current.blockedPages=c.blockedPages; saveStore(); renderDev(); }
+function toggleBtn(i,b){ const c=store.clients[i]; c.blockedBtns=c.blockedBtns||{}; c.blockedSince=c.blockedSince||{}; if(c.blockedBtns[b]){ delete c.blockedBtns[b]; } else { const sel=document.getElementById('rb-'+i+'-'+b); c.blockedBtns[b]=sel?sel.value:"maintenance_btn"; c.blockedSince[b]=new Date().toISOString(); } if(store.current && store.current.login===c.login){ store.current.blockedBtns=c.blockedBtns; store.current.blockedSince=c.blockedSince; } saveStore(); renderDev(); }
+function devAction(i,act){ if(act==='active'){store.clients[i].status='active'; store.clients[i].blocked=false;} else {store.clients[i].status='bloqué'; store.clients[i].blocked=true; store.clients[i].blockReason="systeme";} saveStore(); renderDev(); alert("✅ Mis à jour"); }
+function devDelete(i){ if(!confirm("Supprimer ce client ?")) return; store.clients.splice(i,1); saveStore(); renderDev(); }
+function extendDemo(i){ store.clients[i].demoStart=new Date().toISOString(); store.clients[i].plan="demo"; store.clients[i].status="demo"; saveStore(); renderDev(); alert("🎁 +15 jours demo donnés"); }
+function sendLicence(i){ const _c=store.clients[i];
+  const c=store.clients[i]; if(c.blocked) return alert("Client bloqué, débloque-le d'abord.");
+  const code="ZBRD-"+Math.random().toString(36).slice(2,6).toUpperCase()+"-"+Math.random().toString(36).slice(2,6).toUpperCase();
+  store.codes.push({code:code,login:c.login,date:new Date().toLocaleString()}); c.licence=code; c.plan="pro"; c.status="active"; c.blocked=false; saveStore(); renderDev();
+  alert("✅ Code licence pour "+c.login+":\n"+code+"\n\nEnvoie-le par WhatsApp / Gmail / SMS au +212780717090 vers le client.");
+}
+async function load(){
+  const st=document.getElementById('status'); if(!st) return; st.textContent=''; st.className='hidden';
+  try{
+    const r=await fetch(URL+"/rest/v1/children?select=*&order=nom",{headers:{apikey:KEY,Authorization:"Bearer "+KEY}});
+    if(!r.ok) throw new Error("Erreur "+r.status);
+    rows=await r.json(); st.textContent=''; st.className='hidden';
+    buildChildren(); renderAll();
+  }catch(e){ st.textContent=''; st.className='hidden'; }
+}
+function getChildren(){ const m={}; rows.forEach(r=>{ if(!m[r.enfant_id]) m[r.enfant_id]={id:r.enfant_id,nom:r.nom,age:r.age,niveau:r.niveau,ecole:r.ecole}; }); return Object.values(m); }
+function checkBtnBlocked(b, context){
+  const c=store.current; if(!c || !c.blockedBtns || !c.blockedBtns[b]) return false;
+  const reason=c.blockedBtns[b]; showBlockBox(reason, "Bouton: "+b+" - "+context, false); alert((MSG[reason]||MSG.systeme).t); return true;
+}
+function buildChildren(){
+  const kids=getChildren();
+  document.getElementById('childCountBadge').textContent=kids.length+" enfants";
+  document.getElementById('accCount').textContent=kids.length+" enfants • "+rows.length+" éléments";
+  document.getElementById('enfantsList').innerHTML=kids.length?kids.map(k=>`<div class="card"><div class="row"><div><b>${esc(k.nom)}</b><div class="mut">${k.age} ans • ${esc(k.niveau)} • ${esc(k.ecole)}</div></div><div class="flex" style="max-width:220px"><button class="btn btnG" onclick="setChild('${k.id}')">Voir</button><button class="btn btnR" onclick="deleteChild('${k.id}','${esc(k.nom)}')">🗑️ Supprimer</button></div></div></div>`).join(''):'<div class="card">Aucun enfant.</div>';
+  buildForm('programme','programme','📅 Programme'); buildForm('matieres','emploi','📚 Matière'); buildForm('activites','activite','⚽ Activité'); buildForm('devoirs','devoir','📝 Devoir'); buildForm('rappels','rappel','🔔 Rappel');
+}
+function buildForm(tab,type,title){
+  const kids=getChildren(); const opts=kids.map(k=>`<option value="${k.id}">${esc(k.nom)}</option>`).join('')||'<option value="">Aucun enfant</option>';
+  document.getElementById('form-'+tab).innerHTML=`<div class="card"><h3 style="margin:0">${title} — Ajouter</h3><label>Enfant <span class="req">*</span></label><select id="sel-${tab}">${opts}</select><label>Heure / Jour / Date <span class="req">*</span></label><input id="in1-${tab}" data-nav placeholder="Ex: 08:00 ou Lundi"><label>Titre <span class="req">*</span></label><input id="in2-${tab}" data-nav placeholder="Titre"><label>Détail</label><input id="in3-${tab}" data-nav placeholder="Détail"><div class="flex"><button class="btn btnG" onclick="focusPrevField('in1-${tab}')">← Champ précédent</button><button class="btn btnP" onclick="addItem('${type}','${tab}')">➕ Ajouter</button><button class="btn btnG" onclick="focusNextField('in1-${tab}')">Champ suivant →</button></div></div>`;
+  const list=rows.filter(r=>r.type_donnee===type && (curChild==='all'||r.enfant_id===curChild));
+  document.getElementById('list-'+tab).innerHTML=list.length?list.map(r=>`<div class="card"><div class="row"><span class="tag ${type}">${title}</span><span class="time">${esc(r.jour_date_heure)}</span></div><div class="title">${esc(r.titre)}</div><div class="mut">👤 ${esc(r.nom)} • ${esc(r.detail||'')}</div><button class="btn btnR" style="margin-top:8px" onclick="deleteItem('${esc(r.enfant_id)}','${esc(r.type_donnee)}','${esc(r.jour_date_heure)}','${esc(r.titre)}')">🗑️ Supprimer</button></div>`).join(''):'<div class="card">Aucun élément.</div>';
+}
+async function addChild(){
+  if(checkBtnBlocked('add_child','Ajouter enfant')) return;
+  if(store.current && store.current.plan==="demo" && isDemoExpired(store.current)) return alert("⛔ Demo terminée. Achète Pro dans Licence.");
+  const nom=document.getElementById('fNom').value.trim(), age=document.getElementById('fAge').value, niveau=document.getElementById('fNiveau').value, ecole=document.getElementById('fEcole').value.trim()||"École Al Amal";
+  if(!nom||!age) return alert("Nom + Âge d'abord.");
+  const kids=getChildren(); const max = store.current?.plan==="demo"?2: store.current?.pack==='pack1'?2: store.current?.pack==='pack2'?4: store.current?.pack==='pack3'?5:20;
+  if(kids.length>=max) return alert("Max atteint: "+max+" enfants. Enfant sup. = "+store.prices.extra+" DH.");
+  const id="c"+Date.now();
+  const payload=[{enfant_id:id,nom:nom,age:parseInt(age),niveau:niveau,ecole:ecole,type_donnee:"programme",jour_date_heure:"08:00",titre:"École - Cours",detail:"Premier jour",lieu_notes:""}];
+  const r=await fetch(URL+"/rest/v1/children",{method:"POST",headers:H,body:JSON.stringify(payload)}); if(!r.ok) return alert("Erreur: "+await r.text());
+  curChild=id; await load(); showPage('enfants'); alert("✅ "+nom+" ajouté !");
+}
+async function deleteChild(id,nom){ if(checkBtnBlocked('delete_child','Supprimer enfant')) return; if(!confirm("Supprimer "+nom+" ?")) return; const r=await fetch(URL+"/rest/v1/children?enfant_id=eq."+encodeURIComponent(id),{method:"DELETE",headers:H}); if(!r.ok) return alert("Erreur: "+await r.text()); curChild="all"; await load(); }
+async function addItem(type,tab){
+  if(checkBtnBlocked('add_item','Ajouter '+type)) return;
+  const enfant_id=document.getElementById('sel-'+tab).value; if(!enfant_id) return alert("Ajoute un enfant d'abord.");
+  const kid=getChildren().find(k=>k.id===enfant_id); const a=document.getElementById('in1-'+tab).value.trim(), b=document.getElementById('in2-'+tab).value.trim(), c=document.getElementById('in3-'+tab).value.trim();
+  if(!b) return alert("Titre d'abord.");
+  const payload=[{enfant_id:enfant_id,nom:kid.nom,age:kid.age,niveau:kid.niveau,ecole:kid.ecole,type_donnee:type,jour_date_heure:a,titre:b,detail:c,lieu_notes:""}];
+  const r=await fetch(URL+"/rest/v1/children",{method:"POST",headers:H,body:JSON.stringify(payload)}); if(!r.ok) return alert("Erreur: "+await r.text());
+  await load(); showPage(tab); alert("✅ Ajouté !");
+}
+async function deleteItem(enfant_id,type,jour,titre){ if(checkBtnBlocked('delete_item','Supprimer '+type)) return; if(!confirm("Supprimer: "+titre+" ?")) return; const q=`enfant_id=eq.${encodeURIComponent(enfant_id)}&type_donnee=eq.${encodeURIComponent(type)}&jour_date_heure=eq.${encodeURIComponent(jour)}&titre=eq.${encodeURIComponent(titre)}`; const r=await fetch(URL+"/rest/v1/children?"+q,{method:"DELETE",headers:H}); if(!r.ok) return alert("Erreur: "+await r.text()); await load(); }
+function setChild(id){curChild=id;buildChildren();renderAll();}
+function prevChild(){ const kids=getChildren(); if(!kids.length) return; if(curChild==="all") curChild=kids[kids.length-1].id; else {let i=kids.findIndex(k=>k.id===curChild); curChild=i<=0?"all":kids[i-1].id;} buildChildren(); renderAll(); }
+function nextChild(){ const kids=getChildren(); if(!kids.length) return; if(curChild==="all") curChild=kids[0].id; else {let i=kids.findIndex(k=>k.id===curChild); curChild=i>=kids.length-1?"all":kids[i+1].id;} buildChildren(); renderAll(); }
+function renderAll(){
+  const list=rows.filter(r=>curChild==="all"||r.enfant_id===curChild);
+  document.getElementById('accChild').textContent=curChild==="all"?"Tous les enfants":(getChildren().find(k=>k.id===curChild)?.nom||"");
+  document.getElementById('accList').innerHTML=list.slice(0,20).map(r=>`<div class="card"><div class="row"><span class="tag ${r.type_donnee}">${esc(r.type_donnee)}</span><span class="time">${esc(r.jour_date_heure)}</span></div><div class="title">${esc(r.titre)}</div><div class="mut">👤 ${esc(r.nom)} • ${esc(r.detail||'')}</div></div>`).join('')||'<div class="card">Aucun élément.</div>';
+  ['programme','matieres','activites','devoirs','rappels'].forEach(t=>{ buildForm(t, t==='matieres'?'emploi':t==='activites'?'activite':t==='devoirs'?'devoir':t==='rappels'?'rappel':'programme', t==='matieres'?'📚 Matière':t==='activites'?'⚽ Activité':t==='devoirs'?'📝 Devoir':t==='rappels'?'🔔 Rappel':'📅 Programme'); });
+}
+function saveParams(){ alert("✅ Paramètres enregistrés."); }
+renderPacks(); updateStats();
+// Auto-login: si déjà connecté, l'app reste activée même après fermeture
+if(store.current && store.current.plan){ enterApp(); }
+</script></body></html>

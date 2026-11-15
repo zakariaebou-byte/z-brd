@@ -1,1 +1,8 @@
-test
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.zbrd.app",
+        "sha256_cert_fingerprints": ["42:24:15:A8:F7:D7:51:3E:86:F3:0D:20:FF:AC:BA:D0:75:50:CB:BA:26:FA:BC:C9:5B:94:FC:9D:66:90:2C:16"]
+      }
+    }]
